@@ -11,5 +11,18 @@
   "devDependencies": {
     "@types/node": "^26.1.0",
     "turbo": "^2.10.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@prisma/engines",
+      "@swc/core",
+      "esbuild",
+      "msw",
+      "prisma",
+      "protobufjs",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }

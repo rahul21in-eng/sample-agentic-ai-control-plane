@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib/core";
 import { AgenticAiPlatformPipelineStack } from "../lib/pipeline-stack";
+import { createPlatformStacks } from "../lib/platform";
 
 const app = new cdk.App();
 
@@ -9,12 +10,10 @@ const env = {
   region: process.env.CDK_DEFAULT_REGION,
 };
 
-// The platform deploys via a self-mutating CDK Pipeline (CodeCommit + CodeBuild),
-// so the images build in the cloud and deployers don't need local Docker. The
-// pipeline wraps the platform stacks in a Stage named `Platform`, producing
-// `Platform-*` stacks (e.g. `Platform-CognitoStack`).
-new AgenticAiPlatformPipelineStack(app, "AgenticAiPlatformPipelineStack", {
-  env,
-});
+// Option A: Self-mutating CDK Pipeline (CodeCommit source — requires CodeCommit access).
+// new AgenticAiPlatformPipelineStack(app, "AgenticAiPlatformPipelineStack", { env });
+
+// Option B: Direct deploy — all platform stacks deployed straight from local CDK.
+createPlatformStacks(app, env);
 
 app.synth();
